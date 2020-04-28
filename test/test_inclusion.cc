@@ -9,7 +9,10 @@ using namespace PPLP ;
 
 int main(int argc, char* argv[]) {
   if(argc != 4) {
-    std::cerr << "usage: " << argv[0] << " <inside_poly_filename> "
+    std::string filepath = argv[0] ;
+    std::size_t found = filepath.find_last_of("/") ;
+    std::string filename = filepath.substr(found+1) ;
+    std::cerr << "usage: " << filename << " <inside_poly_filename> "
       << "<outside_poly_filename> <filepath>" << std::endl ;
     return -1 ; 
   }

@@ -32,4 +32,4 @@ include_HEADERS = \
 ../include/pplp_tbbParallel.h \
 ../include/pplp_tool.h
 
-libpplp_la_LIBADD = -lglpk -lm  -lpolkaMPQ -lapron -lgmpxx -lflint -lmpfr -lgmp
+libpplp_la_LIBADD = -lpolkaMPQ -lapron

@@ -127,7 +127,6 @@ typedef std::atomic<std::uint64_t> atomic_counter;
 extern atomic_counter spin_count, work_microseconds;
 
 namespace PPLP {
-
 struct Region {
   Region(const Polyhedron& r_f, RMatrix&& r_r, Point&& p, const std::vector<int>& b,
       std::vector<int>&& ird) : f(std::move(r_f)), r(std::move(r_r)),
@@ -151,13 +150,14 @@ struct Optimal {
   Region region ;
   RMatrix optimal ;
 } ;
+}
 
 #ifdef VERIMAG_POLYHEDRA_TBB_CONCURRENT_STRUCTURES
 #include "tbb/concurrent_vector.h"
 #include "tbb/concurrent_unordered_set.h"
 #include "tbb/concurrent_unordered_map.h"
 
-typedef tbb::concurrent_vector<Optimal> optimal_container ;
+typedef tbb::concurrent_vector<PPLP::Optimal> optimal_container ;
 typedef tbb::concurrent_unordered_map< std::vector<int>, int,
   std::hash< std::vector<int> > > base_map;
 typedef tbb::concurrent_unordered_set<std::vector<int>,
@@ -169,13 +169,13 @@ typedef tbb::concurrent_unordered_set<std::vector<int>,
 #else
 
 #ifdef VERIMAG_POLYHEDRA_PLP_OPENMP
-#include "simple_concurrent_vector.h"
-typedef simple_concurrent_vector<Optimal> optimal_container;
+#include "pplp_simple_concurrent_vector.h"
+typedef simple_concurrent_vector<PPLP::Optimal> optimal_container;
 
 #define LOCKFREE_REGIONS 1
 #define LOCKFREE_REGIONS_WAIT_FOR_CONDITION 1
 #else
-typedef std::vector<Optimal> optimal_container;
+typedef std::vector<PPLP::Optimal> optimal_container;
 
 #endif
 
@@ -195,6 +195,7 @@ typedef std::set<std::vector<int>> base_set;
 #include <mutex>
 #endif
 
+namespace PPLP {
 struct RegionIdx {
   RegionIdx() { on_boundary = -1 ; null_region = false ; }
   RegionIdx(int index, bool null = false, int bd = -1) 
@@ -222,11 +223,12 @@ struct Task {
   int frontier ;
   Vector point ;
 } ;
+}
 
-typedef std::vector<Task> Worklist_t;
+typedef std::vector<PPLP::Task> Worklist_t;
 
 #ifdef VERIMAG_POLYHEDRA_PLP_TBB
-typedef tbb::parallel_do_feeder<Task> task_feeder;
+typedef tbb::parallel_do_feeder<PPLP::Task> task_feeder;
 #else
 class task_feeder {
   Worklist_t& worklist;
@@ -234,15 +236,16 @@ class task_feeder {
 public:
   task_feeder(Worklist_t& worklist0) : worklist(worklist0) { };
 
-  void add(const Task& task) {
+  void add(const PPLP::Task& task) {
     worklist.push_back(task) ;
   }
-  void add(Task&& task) {
+  void add(PPLP::Task&& task) {
     worklist.push_back(task) ;
   }
 };
 #endif
 
+namespace PPLP {
 class Plp {
 public:
   friend class TbbOperator ;

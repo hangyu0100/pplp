@@ -30,8 +30,6 @@
 #include "pplp_double.h"
 #include "pplp_tool.h"
 
-namespace PPLP {
-
 /* TODO TODO
 The chunk size should be adjusted so that sub-minimizations are not too costly.
 */
@@ -50,6 +48,7 @@ extern std::mutex log_mtx_raytracing;
 #endif
 
 
+namespace PPLP {
 enum class ConstraintState {redundant, irredundant} ;
 enum class ConstraintOperator {less, lesseq, equal} ;
 enum class CmpOperator {less, equal, greater} ;

@@ -1,6 +1,6 @@
 
 AM_CPPFLAGS = -I ../include -I /usr/include/flint
-LDADD = ../src/libpplp.la -lglpk -lm  -lpolkaMPQ -lapron -lgmpxx -lflint -lmpfr -lgmp
+LDADD = ../src/libpplp.la 
 
 bin_PROGRAMS = apron convexhull_apron equality exact inclusion minimize \
   minimize_simple plp projection_apron projection \

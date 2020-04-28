@@ -16,7 +16,10 @@ using namespace PPLP ;
 
 int main(int argc, char* argv[]) {
   if(argc < 2 || argc > 4) {
-    std::cerr << "usage: " << argv[0] << " <filename> [nb_threads] [nb_initial_points]" << std::endl ;
+    std::string filepath = argv[0] ;
+    std::size_t found = filepath.find_last_of("/") ;
+    std::string filename = filepath.substr(found+1) ;
+    std::cerr << "usage: " << filename << " <filename> [nb_threads] [nb_initial_points]" << std::endl ;
     return -1 ; 
   }
 

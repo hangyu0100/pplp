@@ -7,8 +7,6 @@
 #define VERIMAG_SIMPLE_CONCURRENT_VECTOR_MAX_SIZE 10000
 #endif
 
-namespace PPLP {
-
 template <typename T> class simple_concurrent_vector {
  private:
   size_t max_size;
@@ -196,5 +194,3 @@ template <typename T> class simple_concurrent_vector {
     return iterator(*this, pos);
   }
 };
-
-}

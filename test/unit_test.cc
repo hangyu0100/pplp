@@ -471,8 +471,8 @@ int main (int argc, char* argv[]) {
   std::cout << "Test subpoly: OK" << std::endl ;
 
   // io
-  assert( TestIo() ) ;
-  std::cout << "Test io: OK" << std::endl ;
+  //assert( TestIo() ) ;
+  //std::cout << "Test io: OK" << std::endl ;
 
   // minimization
   // Gaussian
