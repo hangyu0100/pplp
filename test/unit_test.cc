@@ -160,7 +160,7 @@ bool TestSubPoly() {
   idx1.push_back(2) ;
   Polyhedron sub1 = poly.GetSubPoly(idx1) ;
 
-  assert( sub1.get_constraint_num() == idx1.size() ) ;
+  assert( sub1.get_constraint_num() == (int)idx1.size() ) ;
   for (unsigned i = 0; i < idx1.size(); ++ i) {
     for (int j = 0; j < variNum; ++ j) {
       assert( sub1.GetCoef(i, j) == poly.GetCoef(idx1[i], j) ) ;
@@ -178,7 +178,7 @@ bool TestSubPoly() {
   idx2.push_back(0) ;
   idx2.push_back(3) ;
   Polyhedron sub2 = poly.GetSubPoly(std::vector<int>(), idx2) ;
-  assert( sub2.get_eq_constraint_num() == idx2.size() ) ;
+  assert( sub2.get_eq_constraint_num() == (int)idx2.size() ) ;
   for (int i = 0; i < consNum; ++ i) {
     for (int j = 0; j < variNum; ++ j) {
       assert( sub2.GetCoef(i, j) == poly.GetCoef(i, j) ) ;
@@ -193,8 +193,8 @@ bool TestSubPoly() {
   }
 
   Polyhedron sub3 = poly.GetSubPoly(idx1, idx2) ;
-  assert( sub3.get_constraint_num() == idx1.size() ) ;
-  assert( sub3.get_eq_constraint_num() == idx2.size() ) ;
+  assert( sub3.get_constraint_num() == (int)idx1.size() ) ;
+  assert( sub3.get_eq_constraint_num() == (int)idx2.size() ) ;
   for (unsigned i = 0; i < idx1.size(); ++ i) {
     for (int j = 0; j < variNum; ++ j) {
       assert( sub3.GetCoef(i, j) == poly.GetCoef(idx1[i], j) ) ;

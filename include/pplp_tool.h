@@ -122,8 +122,8 @@ public:
     int idx1, int idx2, bool inverse=false) ;
 
   // Gaussian Elimination
-  static ReducedMatrix GaussianElimination(const RMatrix& matrix, bool varNonNeg = true) ;
-  static ReducedMatrixFloat GaussianEliminationFloat(const Matrix& matrix, bool varNonNeg = true) ;
+  static ReducedMatrix GaussianElimination(const RMatrix& matrix) ;
+  static ReducedMatrixFloat GaussianEliminationFloat(const Matrix& matrix) ;
 
   static void BinomialCoeff(const std::vector<int>& idx, unsigned k,
       std::vector< std::vector<int> >& res, std::list<int> prev = std::list<int>()) ;

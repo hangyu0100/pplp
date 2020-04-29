@@ -194,7 +194,7 @@ bool Tool::ColumnsEq(const RMatrix& matrix, int idx1, int idx2, bool inverse) {
   return ColumnsEq(matrix, matrix, idx1, idx2, inverse) ; 
 }
 
-ReducedMatrix Tool::GaussianElimination(const RMatrix& matrix, bool varNonNeg) {
+ReducedMatrix Tool::GaussianElimination(const RMatrix& matrix) {
   RMatrix constraints(matrix) ;
   const int initVariNum = matrix.cols() - 1 ;
   const int constraintsCols = matrix.cols() ;
@@ -284,7 +284,7 @@ ReducedMatrix Tool::GaussianElimination(const RMatrix& matrix, bool varNonNeg) {
   return res ;
 }
 
-ReducedMatrixFloat Tool::GaussianEliminationFloat(const Matrix& matrix, bool varNonNeg) {
+ReducedMatrixFloat Tool::GaussianEliminationFloat(const Matrix& matrix) {
   Matrix constraints = matrix ;
   const int initVariNum = matrix.cols() - 1 ;
   const int constraintsCols = matrix.cols() ;
@@ -411,7 +411,6 @@ std::vector<int> Tool::GetNonDupIdx(const Matrix& m, bool useFloat) {
   }
   int consNum = m.rows() ;
   int colNum = m.cols() ;
-  double curr, ratio ;
   for (int i = 1; i < consNum; ++ i) {
     dup = false ;
     if ( m.row(i).isZero() ) {
@@ -419,6 +418,7 @@ std::vector<int> Tool::GetNonDupIdx(const Matrix& m, bool useFloat) {
     }
     for (int k = i-1; k >= 0; -- k) {
       if (useFloat) { 
+        double curr, ratio ;
         bool allEq = true ;
         for (int j = 0; j < colNum-1; ++ j) {
           if (m(k,j) != 0) {
@@ -436,6 +436,9 @@ std::vector<int> Tool::GetNonDupIdx(const Matrix& m, bool useFloat) {
             }
           }
           curr = m(i,j) / m(k,j) ;
+          // ratio must have been initialized.
+          // Otherwise either m.row(k) and m.row(i) are all zeros, which is not
+          // possible, or allEq == flase and break.
           if ( curr != ratio ) {
             allEq = false ;
             break ;

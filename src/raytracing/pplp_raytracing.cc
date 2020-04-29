@@ -170,12 +170,11 @@ std::vector<int> Raytracing::GetIntersections(const Ray& ray, int currIdx) {
   log_mtx_raytracing.unlock() ; 
 #endif
 
-  double threshold, currNorm, currDistance = -1, sndDistance = -1 ;
+  double threshold, currDistance = -1, sndDistance = -1 ;
   for (int i = 0; i < consNum; ++ i) {
     if (currIdx == i) continue ;
     double consDirect = products(i);
     currCons = _polyptr->get_coefficients().row(i) ;
-    currNorm = currCons.norm() ;
     threshold = std::numeric_limits<double>().epsilon() ;
     if ( Double::IsLessEq(consDirect, 0.0, threshold) ) continue ;
     thresholdDot = Tool::GetDotProductThreshold( currCons, ray.get_direction() ) ;
@@ -433,11 +432,9 @@ void Raytracing::RayHitting() {
   std::cout << "The matrix of a*r: " << std::endl << normMatrix << std::endl ;
 #endif
 
-  double currConsNorm ;
   Vector currCons ;
   for (int i = 0; i < normMatrix.rows(); ++ i) {
     currCons = _polyptr->get_coefficients().row(i) ;
-    currConsNorm = currCons.norm() ;   
     for (int j = 0; j < normMatrix.cols(); ++ j) {
       Ray currRay( _polyptr->get_coefficients().row(j) ) ;
       if ( std::abs( normMatrix(i, j) ) < Tool::GetDotProductThreshold(currCons, currRay.get_direction() ) ) {
@@ -604,10 +601,9 @@ Vector Raytracing::CalWitnessPoint(const Ray& ray, int currIdx) {
   double product = currCons * ray.get_direction().transpose() ;
   double thresholdDot = Tool::GetDotProductThreshold( currCons, ray.get_direction() ) ;
   double currIdxDis = GetDistanceInverse(currIdx, product, thresholdDot) ;
-  double threshold, currNorm, consDirect, currDistance, sndDistance = -1 ;
+  double threshold, consDirect, currDistance, sndDistance = -1 ;
   for (int i = 0; i < consNum; ++ i) {
     if (currIdx == i) continue ;
-    currNorm = _polyptr->get_coefficients().row(i).norm() ;
     threshold = std::numeric_limits<double>().epsilon() ;
     currCons = _polyptr->get_coefficients().row(i) ;
     consDirect = currCons * ray.get_direction().transpose() ;

@@ -228,9 +228,7 @@ void Polyhedron::SubsIneqConsF(const ReducedMatrixFloat& redM) {
   std::vector<int> nonDupIdx = Tool::GetNonDupIdx(ineqFmat, true) ;
   _coefficients.resize(nonDupIdx.size(), _variable_num) ;
   _constants.resize( nonDupIdx.size() ) ;
-  int rIdx ;
   for (unsigned i = 0; i < nonDupIdx.size(); ++ i) {
-    rIdx = nonDupIdx[i] ;
     _coefficients.row(i) = ineqFmat.row(i).head(_variable_num) ;
     _constants(i) = ineqFmat(i, _variable_num) ;
   }

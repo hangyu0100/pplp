@@ -1741,7 +1741,7 @@ int Plp::GetBdIdx(const RMatrix& matrix, int rowIdx) {
   RNumber zero ;
   zero.set_zero() ;
   bool isBd = false ;
-  int bdIdx ;
+  int bdIdx = -1 ;
   for (unsigned j = 0; j < colNum; ++ j) {
     if (matrix.at(rowIdx,j) > zero) {
       bdIdx = -1 ;
@@ -1753,7 +1753,6 @@ int Plp::GetBdIdx(const RMatrix& matrix, int rowIdx) {
         isBd = true ;
       }
       else {
-        isBd = false ;
         bdIdx = -1 ;
         break ;
       }
@@ -2100,6 +2099,7 @@ bool Plp::MinimizeLp() {
   log_mtx.unlock() ;
 #endif
   
+    // consColSize must have been initialized, otherwise found == false, and break.
     bool isZero = Tool::IsZeroBlock(ineqMatrix, 0, ineqConsSize, 0, consColSize-1) ;
     if (isZero) {
       return false ;
