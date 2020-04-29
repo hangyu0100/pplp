@@ -15922,6 +15922,9 @@ fi
 
 LIBS="-lgmp -lgmpxx -lmpfr $LIBS"
 
+WARNING="-Wall -Wextra -pedantic"
+CXXFLAGS="$CXXFLAGS $WARNING -std=c++11 -fPIC"
+
 ac_config_files="$ac_config_files src/Makefile test/Makefile Makefile"
 
 cat >confcache <<\_ACEOF

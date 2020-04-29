@@ -33,6 +33,9 @@ AC_SEARCH_LIBS([glp_simplex], [glpk], [], [AC_MSG_ERROR([Cannot find glpk librar
 AC_SEARCH_LIBS([fmpq_mat_init], [flint], [], [AC_MSG_ERROR([Cannot find flint library.])])
 LIBS="-lgmp -lgmpxx -lmpfr $LIBS"
 
+WARNING="-Wall -Wextra -pedantic"
+CXXFLAGS="$CXXFLAGS $WARNING -std=c++11 -fPIC"
+
 AC_CONFIG_FILES([
  src/Makefile
  test/Makefile
