@@ -418,7 +418,8 @@ std::vector<int> Tool::GetNonDupIdx(const Matrix& m, bool useFloat) {
     }
     for (int k = i-1; k >= 0; -- k) {
       if (useFloat) { 
-        double curr, ratio ;
+        // ratio will must be assigned later
+        double curr, ratio = 0 ;
         bool allEq = true ;
         for (int j = 0; j < colNum-1; ++ j) {
           if (m(k,j) != 0) {

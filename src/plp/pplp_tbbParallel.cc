@@ -177,7 +177,6 @@ void TbbParallel::Operation(Plp& plpSolver, Worklist_t& worklist, optimal_contai
     }
   }
   
-  bool complete  = true ;
   bool found ; 
   while ( ! toCheck.empty() ) {
     auto currCheck = toCheck.front() ;

@@ -42,7 +42,7 @@ The chunk size should be adjusted so that sub-minimizations are not too costly.
 #define VERIMAG_POLYHEDRA_MINIMIZE_CILK
 #endif
 
-#ifdef DEBUGINFO_PLP
+#if defined(DEBUGINFO_PLP) || defined(PRINT_WARNING)
 #include <mutex>
 extern std::mutex log_mtx_raytracing;
 #endif

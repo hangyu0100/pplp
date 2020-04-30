@@ -14,9 +14,8 @@
 #include "pplp_plp.h"
 #include "pplp_simplex.h"
 
-namespace PPLP {
 
-#ifdef DEBUGINFO_PLP
+#if defined(DEBUGINFO_PLP) || defined(PRINT_WARNING)
 #include <mutex>
 #include <iostream>
 extern std::mutex log_mtx ;
@@ -25,6 +24,7 @@ extern std::mutex log_mtx ;
 
 typedef std::pair<int,int> FrontierIdx ;
 
+namespace PPLP {
 class TbbParallel {
 public:
   TbbParallel(Polyhedron& poly) : _poly(poly) {}

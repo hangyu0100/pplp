@@ -767,6 +767,9 @@ with_gnu_ld
 with_sysroot
 enable_libtool_lock
 enable_parallel
+enable_rational_checker
+enable_debug_log
+enable_rational_plp
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1423,6 +1426,11 @@ Optional Features:
                           optimize for fast installation [default=yes]
   --disable-libtool-lock  avoid locking (might break parallel builds)
   --enable-parallel       tbb, openmp or disable [default=tbb]
+  --enable-rational-checker
+                          turn on the rational checker [default=yes]
+  --enable-debug-log      choose level of debug logs [default=0, turn off]
+  --enable-rational-plp   use ratinoal PLP algorithm instead of floating-point
+                          PLP [default=no]
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -15721,13 +15729,12 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 if test "${enable_parallel+set}" = set; then :
   enableval=$enable_parallel; case $enableval in
     tbb | openmp | disable) ;;
-    *) as_fn_error $? "Invalid value for --parallel" "$LINENO" 5 ;;
+    *) as_fn_error $? "Invalid value for --enable-parallel" "$LINENO" 5 ;;
   esac
 else
   enable_parallel=tbb
 
 fi
-
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking library for parallelism" >&5
 $as_echo_n "checking library for parallelism... " >&6; }
@@ -15744,6 +15751,88 @@ $as_echo "tbb" >&6; }
 else
   { $as_echo "$as_me:${as_lineno-$LINENO}: result: disable" >&5
 $as_echo "disable" >&6; }
+fi
+
+# Check whether --enable-rational-checker was given.
+if test "${enable_rational_checker+set}" = set; then :
+  enableval=$enable_rational_checker; case $enableval in
+    yes | no) ;;
+    *) as_fn_error $? "Invalid value for --enable-rational-checker" "$LINENO" 5
+  esac
+else
+  enable_rational_checker=yes
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to use rational checker" >&5
+$as_echo_n "checking whether to use rational checker... " >&6; }
+if test "x$enable_rational_checker" = "xyes"; then
+  CPPFLAGS="$CPPFLAGS -DPLP_CHECKER_ON"
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+# Check whether --enable-debug-log was given.
+if test "${enable_debug_log+set}" = set; then :
+  enableval=$enable_debug_log; case $enableval in
+    0 | 1 | 2 | 3 | 4 | 5) ;;
+    *) as_fn_error $? "Invalid value for --enable-debug-log" "$LINENO" 5
+  esac
+else
+  enable_debug_log=0
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking the level of debug logs" >&5
+$as_echo_n "checking the level of debug logs... " >&6; }
+if test "x$enable_debug_log" = "x1"; then
+  CPPFLAGS="$CPPFLAGS -DPRINT_WARNING -DPRINT_WARNING"
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: 1, print warnings" >&5
+$as_echo "1, print warnings" >&6; }
+elif test "x$enable_debug_log" = "x2"; then
+  CPPFLAGS="$CPPFLAGS -DPRINT_WARNING -DDEBUGINFO_RAYTRACING"
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: 2, print debug logs for raytracing minimization" >&5
+$as_echo "2, print debug logs for raytracing minimization" >&6; }
+elif test "x$enable_debug_log" = "x3"; then
+  CPPFLAGS="$CPPFLAGS -DPRINT_WARNING -DDEBUGINFO_SIMPLEX"
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: 3, print debug logs for ratinoal Simplex algorithm" >&5
+$as_echo "3, print debug logs for ratinoal Simplex algorithm" >&6; }
+elif test "x$enable_debug_log" = "x4"; then
+  CPPFLAGS="$CPPFLAGS -DPRINT_WARNING -DDEBUGINFO_PLP"
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: 4, print debug logs for PLP" >&5
+$as_echo "4, print debug logs for PLP" >&6; }
+elif test "x$enable_debug_log" = "x5"; then
+  CPPFLAGS="$CPPFLAGS -DPRINT_WARNING -DDEBUGINFO_RAYTRACING -DDEBUGINFO_SIMPLEX -DDEBUGINFO_PLP"
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: 5, print all debug logs" >&5
+$as_echo "5, print all debug logs" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: 0, turn off" >&5
+$as_echo "0, turn off" >&6; }
+fi
+
+# Check whether --enable-rational-plp was given.
+if test "${enable_rational_plp+set}" = set; then :
+  enableval=$enable_rational_plp; case $enableval in
+    yes | no) ;;
+    *) as_fn_error $? "Invalid value for --enable-ratinoal-plp" "$LINENO" 5
+  esac
+else
+  enable_rational_plp=no
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to use ratinoal PLP algorithm" >&5
+$as_echo_n "checking whether to use ratinoal PLP algorithm... " >&6; }
+if test "x$enable_rational_plp" = "xyes"; then
+  CPPFLAGS="$CPPFLAGS -DALWAYS_RATIONAL"
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
 fi
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing exp" >&5

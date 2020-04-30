@@ -17,7 +17,7 @@
 
 using namespace PPLP ;
 
-#ifdef DEBUGINFO_PLP
+#if defined(DEBUGINFO_PLP) || defined(PRINT_WARNING)
 std::mutex log_mtx;
 #endif
 
@@ -1898,7 +1898,8 @@ bool Plp::MinimizeLp() {
     std::vector<int> basicIdx, oriIdx ;
     std::vector<RNumber> feasibleV ;
     std::vector<int> eqIdx ;
-    unsigned eqConsNum, consColSize ;
+    // eqConsNum, consColSize will must be assigned later
+    unsigned eqConsNum = 0, consColSize = 0 ;
     int currIdx ;
     bool found = false ;
     // this loop is used to avoid the wrong constraints found by floating-point
@@ -2052,6 +2053,7 @@ bool Plp::MinimizeLp() {
   log_mtx.unlock() ;
 #endif
 
+    // eqConsNum must have been initialized, otherwise found == false, and break.
     unsigned ineqConsSize = tmpConstraints.rows() - eqConsNum ; 
     RMatrix ineqMatrix(ineqConsSize, consColSize) ;
     std::vector<int> ineqIdx ;

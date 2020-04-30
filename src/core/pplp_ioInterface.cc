@@ -151,11 +151,6 @@ std::vector<Polyhedron> IoInterface::LoadPolyhedra(const char* filepath) {
       }
     }
     
-#ifdef DEBUGINFO_RAYTRACING
-  std::cout << "Load new polyhedron: " << std::endl ;
-  newPoly.Print() ;
-#endif
-
     int eqConsNum = eqIdx.size() ;
     int ineqConsNum = ineqIdx.size() ;
     Matrix eqMatrix(eqConsNum, _vari_num+1) ;
@@ -190,6 +185,11 @@ std::vector<Polyhedron> IoInterface::LoadPolyhedra(const char* filepath) {
     }
 
     Polyhedron newPoly(nonDupIneqNum, _vari_num, nonDupEqNum) ;
+
+#ifdef DEBUGINFO_RAYTRACING
+  std::cout << "Load new polyhedron: " << std::endl ;
+  newPoly.Print() ;
+#endif
 
     for (int i = 0; i < nonDupIneqNum; ++ i) {
       for (int j = 0; j < _vari_num; ++ j) {

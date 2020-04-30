@@ -14,13 +14,13 @@
 #include <eigen3/Eigen/Dense>
 #include "pplp_polyhedron.h"
 
-namespace PPLP {
 
-#ifdef DEBUGINFO_RAYTRACING
+#if defined(DEBUGINFO_RAYTRACING) || defined(PRINT_WARNING)
 #include <mutex>
 extern std::mutex log_mtx_raytracing;
 #endif
 
+namespace PPLP {
 class GlpkInterface {
 public:
   GlpkInterface() ;

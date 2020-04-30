@@ -7,14 +7,14 @@ AC_PROG_CXX
 AC_PROG_LIBTOOL
 
 AC_ARG_ENABLE([parallel],
-  AC_HELP_STRING([--enable-parallel],[tbb, openmp or disable [default=tbb]]),
+  AC_HELP_STRING([--enable-parallel], 
+                 [tbb, openmp or disable [default=tbb]]),
   [case $enableval in 
     tbb | openmp | disable) ;;
-    *) AC_MSG_ERROR([Invalid value for --parallel]) ;;
+    *) AC_MSG_ERROR([Invalid value for --enable-parallel]) ;;
   esac],
   [enable_parallel=tbb]
 )
-
 AC_MSG_CHECKING([library for parallelism])
 if test "x$enable_parallel" = "xopenmp"; then
   CPPFLAGS="$CPPFLAGS -fopenmp"
@@ -27,6 +27,70 @@ elif test "x$enable_parallel" = "xtbb"; then
 else
   AC_MSG_RESULT([disable])
 fi 
+
+AC_ARG_ENABLE([rational-checker],
+  AC_HELP_STRING([--enable-rational-checker], 
+                 [turn on the rational checker [default=yes]]),
+  [case $enableval in
+    yes | no) ;;
+    *) AC_MSG_ERROR([Invalid value for --enable-rational-checker])
+  esac],
+  [enable_rational_checker=yes]
+)
+AC_MSG_CHECKING([whether to use rational checker])
+if test "x$enable_rational_checker" = "xyes"; then
+  CPPFLAGS="$CPPFLAGS -DPLP_CHECKER_ON"
+  AC_MSG_RESULT([yes])
+else
+  AC_MSG_RESULT([no])
+fi
+
+AC_ARG_ENABLE([debug-log],
+  AC_HELP_STRING([--enable-debug-log],
+                 [choose level of debug logs [default=0, turn off]]),
+  [case $enableval in
+    0 | 1 | 2 | 3 | 4 | 5) ;;
+    *) AC_MSG_ERROR([Invalid value for --enable-debug-log])
+  esac],
+  [enable_debug_log=0]
+)
+AC_MSG_CHECKING([the level of debug logs])
+if test "x$enable_debug_log" = "x1"; then
+  CPPFLAGS="$CPPFLAGS -DPRINT_WARNING -DPRINT_WARNING"
+  AC_MSG_RESULT([1, print warnings])
+elif test "x$enable_debug_log" = "x2"; then
+  CPPFLAGS="$CPPFLAGS -DPRINT_WARNING -DDEBUGINFO_RAYTRACING"
+  AC_MSG_RESULT([2, print debug logs for raytracing minimization])
+elif test "x$enable_debug_log" = "x3"; then
+  CPPFLAGS="$CPPFLAGS -DPRINT_WARNING -DDEBUGINFO_SIMPLEX"
+  AC_MSG_RESULT([3, print debug logs for ratinoal Simplex algorithm])
+elif test "x$enable_debug_log" = "x4"; then
+  CPPFLAGS="$CPPFLAGS -DPRINT_WARNING -DDEBUGINFO_PLP"
+  AC_MSG_RESULT([4, print debug logs for PLP])
+elif test "x$enable_debug_log" = "x5"; then
+  CPPFLAGS="$CPPFLAGS -DPRINT_WARNING -DDEBUGINFO_RAYTRACING -DDEBUGINFO_SIMPLEX -DDEBUGINFO_PLP"
+  AC_MSG_RESULT([5, print all debug logs])
+else
+  AC_MSG_RESULT([0, turn off])
+fi
+
+AC_ARG_ENABLE([rational-plp],
+  AC_HELP_STRING([--enable-rational-plp], 
+                 [use ratinoal PLP algorithm instead of floating-point PLP
+                  [default=no]]),
+  [case $enableval in
+    yes | no) ;;
+    *) AC_MSG_ERROR([Invalid value for --enable-ratinoal-plp])
+  esac],
+  [enable_rational_plp=no]
+)
+AC_MSG_CHECKING([whether to use ratinoal PLP algorithm])
+if test "x$enable_rational_plp" = "xyes"; then
+  CPPFLAGS="$CPPFLAGS -DALWAYS_RATIONAL"
+  AC_MSG_RESULT([yes])
+else
+  AC_MSG_RESULT([no])
+fi
 
 AC_SEARCH_LIBS([exp], [m], [], [AC_MSG_ERROR([Cannot find m library.])])
 AC_SEARCH_LIBS([glp_simplex], [glpk], [], [AC_MSG_ERROR([Cannot find glpk library.])])
