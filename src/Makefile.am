@@ -14,11 +14,13 @@ plp/pplp_simplex.cc \
 plp/pplp_tbbParallel.cc \
 raytracing/pplp_ray.cc \
 raytracing/pplp_raytracing.cc \
-thirdpart/pplp_apronInterface.cc \
 thirdpart/pplp_glpkInterface.cc
 
+if WITH_APRON
+libpplp_la_SOURCES += thirdpart/pplp_apronInterface.cc
+endif
+
 include_HEADERS = \
-../include/pplp_apronInterface.h \
 ../include/pplp_double.h \
 ../include/pplp_glpkInterface.h \
 ../include/pplp_ioInterface.h \
@@ -32,4 +34,6 @@ include_HEADERS = \
 ../include/pplp_tbbParallel.h \
 ../include/pplp_tool.h
 
-libpplp_la_LIBADD = -lpolkaMPQ -lapron
+if WITH_APRON
+include_HEADERS += ../include/pplp_apronInterface.h
+endif

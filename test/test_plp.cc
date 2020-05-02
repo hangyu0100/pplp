@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
     }
     ApronInterface apronMini(rationalApron) ; 
 
-    int plpConsNum = tbb.GetOptimalMatrix().rows() ;
+    int plpConsNum = tbbOpt.rows() ;
     if (apronMini.GetConsNum() != plpConsNum) {
       res = false ; 
     }

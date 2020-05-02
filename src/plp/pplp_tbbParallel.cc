@@ -89,7 +89,9 @@ void TbbParallel::PlpParallel(int nb_initial_points) {
   assert(optimals.size() == plpSolver.get_optimals_count());
   std::unordered_set<RMatrix> minimized_optimals ;
   for (unsigned i = 0; i < plpSolver.get_optimals_count(); ++ i) {
-    minimized_optimals.insert( plpSolver.get_optimal(i) ) ;
+    if ( ! plpSolver.IsConstantRegion(i) ) {
+      minimized_optimals.insert( plpSolver.get_optimal(i) ) ;
+    }
   }
   //std::cout << "regions: " << regions.size() << " optimals: " << optimals.size() << " minimized_optimals: " << minimized_optimals.size() << std::endl;
   _optimals = std::move(minimized_optimals) ;

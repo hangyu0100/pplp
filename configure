@@ -632,6 +632,8 @@ ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS
 LIBOBJS
+WITH_APRON_FALSE
+WITH_APRON_TRUE
 CXXCPP
 LT_SYS_LIBRARY_PATH
 OTOOL64
@@ -770,6 +772,7 @@ enable_parallel
 enable_rational_checker
 enable_debug_log
 enable_rational_plp
+with_apron
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1443,6 +1446,8 @@ Optional Packages:
   --with-gnu-ld           assume the C compiler uses GNU ld [default=no]
   --with-sysroot[=DIR]    Search for dependent libraries within DIR (or the
                           compiler's sysroot if not specified).
+  --with-apron            use apron library for comparing the results
+                          [default=no]
 
 Some influential environment variables:
   CC          C compiler command
@@ -15835,6 +15840,37 @@ else
 $as_echo "no" >&6; }
 fi
 
+
+# Check whether --with-apron was given.
+if test "${with_apron+set}" = set; then :
+  withval=$with_apron; case $withval in
+    yes | no) ;;
+    *) as_fn_error $? "Invalid value for --with-apron" "$LINENO" 5
+  esac
+else
+  with_apron=no
+
+fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to use apron library" >&5
+$as_echo_n "checking whether to use apron library... " >&6; }
+if test "x$with_apron" = "xyes"; then
+  LIBS="$LIBS -lpolkaMPQ -lapron"
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+fi
+ if test "x$with_apron" = "xyes"; then
+  WITH_APRON_TRUE=
+  WITH_APRON_FALSE='#'
+else
+  WITH_APRON_TRUE='#'
+  WITH_APRON_FALSE=
+fi
+
+
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for library containing exp" >&5
 $as_echo_n "checking for library containing exp... " >&6; }
 if ${ac_cv_search_exp+:} false; then :
@@ -16012,7 +16048,7 @@ fi
 LIBS="-lgmp -lgmpxx -lmpfr $LIBS"
 
 WARNING="-Wall -Wextra -pedantic -Wno-deprecated-copy"
-CXXFLAGS="$CXXFLAGS $WARNING -std=c++11 -fPIC"
+CXXFLAGS="$CXXFLAGS $WARNING -std=c++11 -g -fPIC"
 
 ac_config_files="$ac_config_files src/Makefile test/Makefile Makefile"
 
@@ -16187,6 +16223,10 @@ Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${am__fastdepCXX_TRUE}" && test -z "${am__fastdepCXX_FALSE}"; then
   as_fn_error $? "conditional \"am__fastdepCXX\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
+if test -z "${WITH_APRON_TRUE}" && test -z "${WITH_APRON_FALSE}"; then
+  as_fn_error $? "conditional \"WITH_APRON\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 

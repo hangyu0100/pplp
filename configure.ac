@@ -1,4 +1,4 @@
-AC_INIT([pplp], [1.0])
+sudo apt install uswsusp  AC_INIT([pplp], [1.0])
 AC_CONFIG_MACRO_DIRS([m4])
 AM_INIT_AUTOMAKE([-Wall -Wno-extra-portability foreign subdir-objects])
 
@@ -92,13 +92,31 @@ else
   AC_MSG_RESULT([no])
 fi
 
+AC_ARG_WITH(apron,
+  AC_HELP_STRING([--with-apron], 
+               [use apron library for comparing the results [default=no]]),
+  [case $withval in
+    yes | no) ;;
+    *) AC_MSG_ERROR(Invalid value for --with-apron) 
+  esac],
+  [with_apron=no]
+)
+AC_MSG_CHECKING([whether to use apron library])
+if test "x$with_apron" = "xyes"; then
+  LIBS="$LIBS -lpolkaMPQ -lapron"
+  AC_MSG_RESULT([yes])
+else
+  AC_MSG_RESULT([no])
+fi
+AM_CONDITIONAL([WITH_APRON],[test "x$with_apron" = "xyes"])
+
 AC_SEARCH_LIBS([exp], [m], [], [AC_MSG_ERROR([Cannot find m library.])])
 AC_SEARCH_LIBS([glp_simplex], [glpk], [], [AC_MSG_ERROR([Cannot find glpk library.])])
 AC_SEARCH_LIBS([fmpq_mat_init], [flint], [], [AC_MSG_ERROR([Cannot find flint library.])])
 LIBS="-lgmp -lgmpxx -lmpfr $LIBS"
 
 WARNING="-Wall -Wextra -pedantic -Wno-deprecated-copy"
-CXXFLAGS="$CXXFLAGS $WARNING -std=c++11 -fPIC"
+CXXFLAGS="$CXXFLAGS $WARNING -std=c++11 -g -fPIC"
 
 AC_CONFIG_FILES([
  src/Makefile
