@@ -17,5 +17,3 @@ check_PROGRAMS = unit_test
 TESTS = ${check_PROGRAMS}
 unit_test_SOURCES = unit_test.cc
 
-#check: unit_test
-#	./unit_test
