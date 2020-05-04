@@ -57,20 +57,8 @@ int main(int argc, char* argv[]) {
     auto end_plp = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff_plp = (end_plp - start_plp) * 1e3 ;
 
-    std::cout << diff_plp.count() << std::endl ;
-
-    /*
-    if ( apronInter.CmpConvexHull( polyVec2[i], tbb.GetOptimalMatrix() ) ) {
-      //std::cout << "*******************Projection results in " << polyName << " of poly " 
-        //  << poly.get_id() << " are the same." << std::endl ;
-    }
-    else {
-      Polyhedron projPoly = tbb.GetOptPoly() ;
-      std::cout << "*******************Convex hull of " << polyName1 << " and  " 
-          << polyName2 << " of " << i << " are NOT the same." << std::endl ;
-      projPoly.Print() ;
-    }
-    */
+    Polyhedron projPoly = tbb.GetOptPoly() ;
+    projPoly.Print() ;
 
   }
   return 0 ;

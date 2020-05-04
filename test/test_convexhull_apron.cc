@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
     ApronInterface apronInter(polyVec1[i]) ;
     apronInter.ConvexHull( polyVec2[i] ) ;
     auto end_apron = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> diff_apron = (end_apron - start_apron) * 1e3 ;
+    //std::chrono::duration<double> diff_apron = (end_apron - start_apron) * 1e3 ;
 
     TbbParallel tbb(miniPoly1, miniPoly2) ;
     auto start_plp = std::chrono::high_resolution_clock::now();
@@ -65,20 +65,17 @@ int main(int argc, char* argv[]) {
     auto end_plp = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff_plp = (end_plp - start_plp) * 1e3 ;
 
-    std::cout << "apron," << diff_apron.count() << ",plp," << diff_plp.count() << std::endl ;
+    //std::cout << "apron," << diff_apron.count() << ",plp," << diff_plp.count() << std::endl ;
 
-    /*
     if ( apronInter.CmpConvexHull( polyVec2[i], tbb.GetOptimalMatrix() ) ) {
-      //std::cout << "*******************Projection results in " << polyName << " of poly " 
-        //  << poly.get_id() << " are the same." << std::endl ;
+      std::cout << "*******************Convex hull of " << polyName1 << " and  " 
+          << polyName2 << " of " << i << " are the same." << std::endl ;
     }
     else {
       Polyhedron projPoly = tbb.GetOptPoly() ;
       std::cout << "*******************Convex hull of " << polyName1 << " and  " 
           << polyName2 << " of " << i << " are NOT the same." << std::endl ;
-      projPoly.Print() ;
     }
-    */
 
   }
   return 0 ;

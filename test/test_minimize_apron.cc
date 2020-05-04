@@ -21,7 +21,7 @@ int main (int argc, char* argv[]) {
   }
   IoInterface ioInter ;
   std::vector<Polyhedron> polyVec = ioInter.LoadPolyhedra(argv[1]) ;
-  bool res, allequal = true ;
+  bool res ;
   int idx = 0 ;
   std::string polyName = "P_" + std::to_string( ioInter.get_cons_num() )
       + "_" + std::to_string( ioInter.get_redundancy() )
@@ -82,8 +82,8 @@ int main (int argc, char* argv[]) {
     }
 
     if (res == true) {
-      //std::cout << "Minimized polyhedra " << ioInter.n << ": " 
-      //      << idx << " are equal." << std::endl ;
+      std::cout << "Minimized polyhedra " << polyName << ": " 
+            << idx << " are equal." << std::endl ;
     }
     else {
       std::cout << "Minimized polyhedra " << polyName << ": " 
@@ -94,14 +94,8 @@ int main (int argc, char* argv[]) {
       apronMini.Print() ;
     }
 
-      //allequal = false ;
-      //std::terminate() ;
     ++ idx ;
   } 
-  /*
-  if (allequal) {
-    std::cout << "All the minimized polyhedra are equal." << std::endl ;    
-  }
-  */
+  
   return 0 ;
 }

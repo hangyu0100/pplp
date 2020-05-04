@@ -52,34 +52,17 @@ int main(int argc, char* argv[]) {
       + "_" + std::to_string( ioInter.get_zero_num() ) ;
 
   for (auto& poly : polyVec) {
+    std::cout << polyName << ": " << idx << std::endl ;
     // polyNum, total consNum, redundancy, variNum, zeros, generators, id 
     auto start = std::chrono::steady_clock::now() ;
-    poly.Minimize(true) ;
+    Polyhedron minimizedP = poly.GetMinimizedPoly(true) ;
     auto end = std::chrono::steady_clock::now() ;
     std::chrono::duration<double> diff = (end - start) * 1000 ;
     //std::cout << "Running time: " << diff.count() << " ms" << std::endl ;
-    
-    if (argc == 3) {
-      ofs << ioInter.get_cons_num() << ","
-        << poly.get_redundant_num() << "," << ioInter.get_vari_num() << ","
-        << ioInter.get_zero_num() << "," << poly.get_generator_num() << "," 
-        << poly.get_id() << "," << diff.count() << std::endl ;
-    }
-    ++ idx ;
-    std::cout << polyName << ": " << idx << std::endl ;
-    //totalTime += diff.count() ;
-    //poly.PrintActiveIdx() ;
-    //std::cout << poly.GetActiveIdx().size() << " irredundant constraints." << std::endl ;
-    /*
-    for ( auto curr : poly.GetActiveIdx() ) {
-      std::cout << curr << " " ;
-    }
-    std::cout << std::endl ;
-    */
+   
+    minimizedP.Print() ;
+   
   }
-  //double aveTime = totalTime / polyVec.size() ;
-  //std::cout << "Average running time: " << aveTime << " ms" << std::endl ;
-  //ofs << aveTime << std::endl ; 
-
+  
   return 0 ;
 } 

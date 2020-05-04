@@ -317,12 +317,7 @@ ap_lincons1_array_t ApronInterface::ConvexHull(const Polyhedron& poly2) {
   ap_abstract1_t resAbs = ap_abstract1_join(_man , false, &_abs, &abs2) ;
   ap_lincons1_array_t res = ap_abstract1_to_lincons_array(_man, &resAbs) ;
 
-  ap_generator1_array_t generator = ap_abstract1_to_generator_array(_man, &resAbs) ;
-  int genSize = (int)ap_generator1_array_size(&generator) ;
-  std::cout << "generator," << genSize << "," ;
-
   return res ;
-
 }
 
 /*******************************************************************************
