@@ -49,6 +49,7 @@ int main(int argc, char* argv[]) {
     //miniPoly.Print() ;
     auto start_apron = std::chrono::high_resolution_clock::now();
     ApronInterface apronInter(poly) ;
+    apronInter.Project(projNum) ;
     auto end_apron = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff_apron = (end_apron - start_apron) * 1e3 ;
     TbbParallel tbb(miniPoly) ;
@@ -57,8 +58,9 @@ int main(int argc, char* argv[]) {
     auto end_plp = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> diff_plp = (end_plp - start_plp) * 1e3 ;
 
-    //std::cout << "apron," << diff_apron.count() << ",plp," << diff_plp.count() << std::endl ;
+    std::cout << "apron," << diff_apron.count() << ",plp," << diff_plp.count() << std::endl ;
 
+    /*
     if ( apronInter.CmpProjectedPoly( tbb.get_proj_idx(), tbb.GetOptimalMatrix() ) ) {
       std::cout << "*******************Projection results in " << polyName << " of poly " 
           << poly.get_id() << " are the same." << std::endl ;
@@ -69,6 +71,7 @@ int main(int argc, char* argv[]) {
           << poly.get_id() << " are NOT the same." << std::endl ;
       //projPoly.Print() ;
     }
+    */
   }
   return 0 ;
 }
