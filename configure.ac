@@ -1,4 +1,4 @@
-sudo apt install uswsusp  AC_INIT([pplp], [1.0])
+AC_INIT([pplp], [1.0])
 AC_CONFIG_MACRO_DIRS([m4])
 AM_INIT_AUTOMAKE([-Wall -Wno-extra-portability foreign subdir-objects])
 
